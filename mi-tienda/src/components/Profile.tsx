@@ -1,33 +1,81 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const API = "https://ecommerce-api-production-f3f2.up.railway.app/api";
+
+interface ProfileData {
+  _id:   string;
+  name:  string;
+  email: string;
+  role:  string;
+}
+
 export default function Profile() {
-  const { user, token, logout, isAdmin } = useAuth();
+  const { token, logout } = useAuth();
   const navigate = useNavigate();
 
-  if (!user) {
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [error,   setError]   = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    const fetchProfile = async () => {
+      try {
+        const res = await fetch(`${API}/users/profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "Error al cargar perfil.");
+        setProfile(data);
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Error inesperado.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [token, navigate]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  if (loading) {
     return (
       <div className="auth-wrapper">
         <div className="auth-card" style={{ textAlign: "center" }}>
-          <p style={{ marginBottom: "1rem", color: "#666" }}>
-            Debes iniciar sesión para ver tu perfil.
-          </p>
-          <button className="btn-primary" onClick={() => navigate("/login")}>
-            Ir al login
+          <p style={{ color: "#666" }}>Cargando perfil...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !profile) {
+    return (
+      <div className="auth-wrapper">
+        <div className="auth-card" style={{ textAlign: "center" }}>
+          <p className="msg msg--error">{error || "No se pudo cargar el perfil."}</p>
+          <button className="btn-primary" style={{ marginTop: "1rem" }} onClick={() => navigate("/login")}>
+            Volver al login
           </button>
         </div>
       </div>
     );
   }
 
-  const initials = user.name
-    ? user.name.split(" ").map((w: string) => w[0]).join("").toUpperCase().slice(0, 2)
-    : user.email[0].toUpperCase();
+  const initials = profile.name
+    ? profile.name.split(" ").map((w: string) => w[0]).join("").toUpperCase().slice(0, 2)
+    : profile.email[0].toUpperCase();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+  const isAdmin = profile.role === "admin";
 
   return (
     <div className="auth-wrapper">
@@ -38,33 +86,21 @@ export default function Profile() {
             {initials}
           </div>
           <div>
-            <h2>{user.name || user.email}</h2>
-            <span className={`role-badge ${isAdmin ? "role-badge--admin" : "role-badge--cliente"}`}>
-              {isAdmin ? "Administrador" : "Cliente"}
-            </span>
+            <h2>{profile.name}</h2>
+            <p style={{ fontSize: "0.875rem", color: "#666", marginTop: "2px" }}>
+              {profile.email}
+            </p>
           </div>
         </div>
 
         <div className="profile-body">
           <div className="profile-row">
+            <span className="profile-label">Nombre</span>
+            <span className="profile-value">{profile.name}</span>
+          </div>
+          <div className="profile-row">
             <span className="profile-label">Correo</span>
-            <span className="profile-value">{user.email}</span>
-          </div>
-          <div className="profile-row">
-            <span className="profile-label">Rol</span>
-            <span className="profile-value">{isAdmin ? "Admin" : "Cliente"}</span>
-          </div>
-          {user._id && (
-            <div className="profile-row">
-              <span className="profile-label">ID</span>
-              <span className="profile-value profile-value--mono">{user._id}</span>
-            </div>
-          )}
-          <div className="profile-row">
-            <span className="profile-label">Token JWT</span>
-            <span className="profile-value profile-value--mono">
-              {token ? token.slice(0, 24) + "…" : "—"}
-            </span>
+            <span className="profile-value">{profile.email}</span>
           </div>
         </div>
 
