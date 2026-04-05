@@ -1,0 +1,98 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+ .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #9893fb;
+    cursor: pointer;
+}
+
+.logo span {
+    color: #000;
+}
+
+.navbar{
+    flex : 1;
+    margin-left: 2rem;
+
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+
+.nav-links  a {
+    text-decoration: none;
+    color: #555;
+    font-size: 18px;
+   
+}
+
+.nav-links a:hover {
+    color: #9893fb;
+}
+
+
+.icons{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.search-btn {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+}
+
+.search-btn, icons-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: color 0.3s ease;
+
+}
+
+.search-btn, icons-button:hover, .icons-button:hover {
+    color: #120d70;
+}
+
+
+/* Contador del carrito */
+
+.icon-button {
+    position: relative;
+    display: inline-block;
+}
+
+/* estilo para el contador que se  muestra sobre el icono */
+
+.counter {
+    
+    top: -5px;
+    right: -5px;
+    width: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    color : #fff;
+    background-color: #9893fb;
+}
