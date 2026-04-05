@@ -1,0 +1,74 @@
+.main-content {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-category {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.filter-type {
+    padding: 10px;
+    border: 1px solid #ddd;
+    
+}
+
+.filters-category h3 {
+    font-size: 18px;
+    margin-bottom: 1rem;
+     font-family: 16px;
+    font-weight: bold;
+}
+
+
+
+
+.filter-category label{
+    display:inline-block;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.filter-category span {
+    font-size: 14px;
+}
+
+.filter label input{
+    margin: 0;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+input[type="checkbox"] {
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+}
+ 
+
+/* Estilos para la sección de colección */
+.collection{
+    flex : 1;
+}
+
+.collection-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    
+}
+    
+
+   
+ 
+
+

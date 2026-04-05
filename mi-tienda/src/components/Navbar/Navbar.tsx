@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
     return (
        <section className='header'>
-        <h1 className='logo'>MI-TI<span >ENDA</span></h1>
+        <h1 className='logo'>MI-<span >TIENDA</span></h1>
         <nav className='navbar'>
             <ul className='nav-links'>
                 <li>
