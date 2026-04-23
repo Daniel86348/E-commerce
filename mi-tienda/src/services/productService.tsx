@@ -22,7 +22,7 @@ export const fetchProducts = async ({
         params.append('page', page.toString());
         params.append('limit', limit.toString());
         
-        const response = await fetch(`${API_URL}/products?${params.toString()}`);
+        const response = await fetch(`${API_URL}/api/products?${params.toString()}`);
         if (!response.ok){
             throw new Error("Error al cargar los productos");
         }
@@ -35,7 +35,7 @@ export const fetchProducts = async ({
 
 export const fetchCategories = async (): Promise<string[]> => {
     try {
-        const response = await fetch(`${API_URL}/products?limit=100`);
+        const response = await fetch(`${API_URL}/api/products?limit=100`);
         if (!response.ok) {
             throw new Error("Error al cargar las categorías");
         }
