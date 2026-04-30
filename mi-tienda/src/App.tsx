@@ -1,3 +1,9 @@
+<<<<<<< main
+import { CatalogPage } from './pages/CatalogPage';
+
+function App() {
+  return <CatalogPage />;
+=======
 import { useState } from 'react'
 import CashierPOS from '/components/CashierPOS'
 
@@ -116,6 +122,7 @@ function App() {
     </>
   )
   
+>>>>>>> feature/busqueda-venta-rapida(jhon)
 }
 
-export default App
+export default App;
